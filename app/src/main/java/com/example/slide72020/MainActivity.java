@@ -6,6 +6,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
@@ -160,5 +161,28 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    public void saveToShare(View view) {
+
+        String text = edtText.getText().toString().trim();
+        if (text.isEmpty()) {
+            Toast.makeText(this, "Can nhap thong tin", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        SharedPreferences sharedPreferences = getSharedPreferences("share",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name",text);
+
+        editor.commit();
+
+
+    }
+
+    public void loadFromShare(View view) {
+
+        SharedPreferences sharedPreferences = getSharedPreferences("share",MODE_PRIVATE);
+        String text = sharedPreferences.getString("name","CHUA LUU GI ???");
+        Toast.makeText(this,text,Toast.LENGTH_LONG).show();
     }
 }
